@@ -11,28 +11,27 @@ sys.path.append('hash-tables-sahu0957')
 hash_functions = importlib.import_module("hash-tables-sahu0957.hash_functions")
 hash_tables = importlib.import_module("hash-tables-sahu0957.hash_tables")
 
+
 def main():
     parser = argparse.ArgumentParser(
-            description="creates plots comparing search method efficiency across\
+            description="creates plots comparing \
+                    search method efficiency across\
                          multiple data structures")
     parser.add_argument("--data_structure",
                         type=str,
-                        help="specify a data structure ('avl', 'binary', or 'hash')",
+                        help="specify a data structure\
+                                ('avl', 'binary', or 'hash')",
                         required=True)
     parser.add_argument("--dataset",
                         type=str,
                         help="data file to add to the data structure",
-                        required = True)
+                        required=True)
     parser.add_argument("--data_size",
                         type=int,
-                        help="size of the data structure (must be 10,000 or less)")
+                        help="size of the data structure (10,000 or less)")
 
     args = parser.parse_args()
-    
-    print("data_structure:" + str(args.data_structure))
-    print("data_size:"+ str(args.data_size))
-    print("data_file:" + str(args.dataset))
-    if path.exists(args.dataset) != True:
+    if path.exists(args.dataset) is not True:
         print("data file doesn't exist!")
         sys.exit(1)
     if args.data_size > 10000:
@@ -57,19 +56,25 @@ def main():
                 structure.add(l, l)
             index += 1
         end = time.time()
-        print("add_time:" + str(end-start))
+        add_time = str(end-start)
         # Searching those values
         start = time.time()
         for key in keys:
             structure.search(key)
         end = time.time()
-        print("search_keys:" + str(end-start))
+        search_time = str(end-start)
         # search for nonexistant keys
         start = time.time()
         for key in keys:
             structure.search(key + '_nonexistant')
         end = time.time()
-        print("search_nonexistant_time:" + str(end-start))
+        nonexistant_search = str(end-start)
+        print(args.data_structure +
+              "," + str(args.data_size) +
+              "," + args.dataset +
+              "," + add_time +
+              "," + search_time +
+              "," + nonexistant_search)
         sys.exit(0)
     elif args.data_structure == "binary":
         # inserting into root
@@ -82,22 +87,28 @@ def main():
             keys.append(l)
             values.append(l)
             if (index < args.data_size):
-                root = binary_tree.insert(root, key = l, value = l)
+                root = binary_tree.insert(root, key=l, value=l)
                 index = index + 1
         end = time.time()
-        print("add_time:" + str(end-start))
+        add_time = str(end-start)
         # searching those keys
         start = time.time()
         for key in keys:
             search = binary_tree.search(root, key)
             # search nonexisting keyes
         end = time.time()
-        print("searching_present_keys:" + str(end-start))
+        search_time = str(end-start)
         start = time.time()
         for key in keys:
             search = binary_tree.search(root, key + '_nonexistant')
         end = time.time()
-        print("search_nonexistant_keys:" + str(end-start))
+        nonexistant_search = str(end-start)
+        print(args.data_structure +
+              "," + str(args.data_size) +
+              "," + args.dataset +
+              "," + add_time +
+              "," + search_time +
+              "," + nonexistant_search)
         sys.exit(0)
     elif args.data_structure == "avl":
         # insert our keys
@@ -113,25 +124,31 @@ def main():
                 structure.insert(l)
             index += 1
         end = time.time()
-        print("add_time:" + str(end-start))
+        add_time = str(end-start)
         # search the keys above
         start = time.time()
         for key in keys:
             structure.find(key)
         end = time.time()
-        print("search_keys:" + str(end-start))
+        search_time = str(end-start)
         # search nonexisting keys
         start = time.time()
         for key in keys:
             structure.find(key + '_nonexistant')
         end = time.time()
-        print("search_nonexistant_keys:" + str(end-start))
+        nonexistant_search = str(end-start)
+        print(args.data_structure + "," +
+              str(args.data_size) +
+              "," + args.dataset +
+              "," + add_time + "," +
+              search_time + "," + nonexistant_search)
         sys.exit(0)
     else:
         print("data structure not recognized!")
         sys.exit(1)
     print("Unknown error! Exiting!")
     sys.exit(2)
+
 
 if __name__ == '__main__':
     main()

@@ -29,6 +29,9 @@ def main():
 
     args = parser.parse_args()
     
+    print("data_structure:" + str(args.data_structure))
+    print("data_size:"+ str(args.data_size))
+    print("data_file:" + str(args.dataset))
     if path.exists(args.dataset) != True:
         print("data file doesn't exist!")
         sys.exit(1)
@@ -44,6 +47,7 @@ def main():
                                             hash_functions.h_rolling)
         keys = []
         values = []
+        start = time.time()
         for l in open(args.dataset):
             # for simplicity, we'll just have the key
             # and value be the same
@@ -52,14 +56,20 @@ def main():
             if index < args.data_size:
                 structure.add(l, l)
             index += 1
-
+        end = time.time()
+        print("add_time:" + str(end-start))
         # Searching those values
+        start = time.time()
         for key in keys:
             structure.search(key)
-            # search for nonexistant keys
+        end = time.time()
+        print("search_keys:" + str(end-start))
+        # search for nonexistant keys
+        start = time.time()
         for key in keys:
             structure.search(key + '_nonexistant')
-        print("Success!")
+        end = time.time()
+        print("search_nonexistant_time:" + str(end-start))
         sys.exit(0)
     elif args.data_structure == "binary":
         # inserting into root
@@ -67,19 +77,27 @@ def main():
         keys = []
         values = []
         index = 0
+        start = time.time()
         for l in open(args.dataset):
             keys.append(l)
             values.append(l)
             if (index < args.data_size):
                 root = binary_tree.insert(root, key = l, value = l)
                 index = index + 1
-            # searching those keys
+        end = time.time()
+        print("add_time:" + str(end-start))
+        # searching those keys
+        start = time.time()
         for key in keys:
             search = binary_tree.search(root, key)
             # search nonexisting keyes
+        end = time.time()
+        print("searching_present_keys:" + str(end-start))
+        start = time.time()
         for key in keys:
             search = binary_tree.search(root, key + '_nonexistant')
-        print("Success!")
+        end = time.time()
+        print("search_nonexistant_keys:" + str(end-start))
         sys.exit(0)
     elif args.data_structure == "avl":
         # insert our keys
@@ -87,19 +105,27 @@ def main():
         keys = []
         values = []
         index = 0
+        start = time.time()
         for l in open(args.dataset):
             keys.append(l)
             values.append(l)
             if (index < args.data_size):
                 structure.insert(l)
             index += 1
+        end = time.time()
+        print("add_time:" + str(end-start))
         # search the keys above
+        start = time.time()
         for key in keys:
             structure.find(key)
+        end = time.time()
+        print("search_keys:" + str(end-start))
         # search nonexisting keys
+        start = time.time()
         for key in keys:
             structure.find(key + '_nonexistant')
-        print("Success!")
+        end = time.time()
+        print("search_nonexistant_keys:" + str(end-start))
         sys.exit(0)
     else:
         print("data structure not recognized!")

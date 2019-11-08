@@ -13,4 +13,5 @@ before_install:
     - conda install --yes matplotlib
     - git submodule update --init 
 script:
-    - python test_binary_tree.py 
+    - python test_binary_tree.py
+    - bash test_insert_key_value_pairs.sh 

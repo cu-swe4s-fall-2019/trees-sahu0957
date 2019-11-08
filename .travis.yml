@@ -14,4 +14,6 @@ before_install:
     - git submodule update --init 
 script:
     - python test_binary_tree.py
-    - bash test_insert_key_value_pairs.sh 
+    - bash test_insert_key_value_pairs.sh
+    - pycodestyle binary_tree.py
+    - pycodestyle insert_key_value_pairs.py 

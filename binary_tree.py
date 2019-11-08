@@ -35,7 +35,6 @@ def search(root, key):
     if root is None:
         # If our root is none, that means this node is empty, and thus there's
         # no value here
-        print("node is empty")
         return None
     elif root.key == key:
         # If our key matches, great! Return the associated value and exit
@@ -50,5 +49,4 @@ def search(root, key):
         # triggers a recursion
         return search(root.right, key)
 
-    print("key not in tree")
     return None
